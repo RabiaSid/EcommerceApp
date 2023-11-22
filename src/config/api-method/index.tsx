@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const apiHandle = axios.create({
-    baseURL:"https://jsonplaceholder.typicode.com",
+    baseURL:"https://fakestoreapi.com",
     headers:{
         Authorization:`Bearer `
     }
