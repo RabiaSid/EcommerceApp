@@ -6,30 +6,46 @@ import {
   Text,
   ScrollView,
   Image,
-  ToastAndroid
+  ToastAndroid,
 } from 'react-native';
 import rncStyles from 'rncstyles';
-import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
+import {fbLogin} from '../../../config/firebase/firebase-methods';
+import {useDispatch} from 'react-redux';
+import { add } from '../../../config/redux/reducers/userSlice';
 
 export default function Login({navigation}: any) {
+  const dispatch = useDispatch();
   const [model, setModel] = useState<any>({});
 
+  // sir way
+  // const LogInUser = () => {
+  //   auth()
+  //     .signInWithEmailAndPassword(model.email, model.password)
+  //     .then(res => {
+  //       let id = res.user.uid;
+  //       database()
+  //         .ref(`users/${id}`)
+  //         .on('value', data => {
+  //           let user = data.val();
+  //           console.log(user);
+  //           ToastAndroid.show(`welcome ${model.email}`, ToastAndroid.SHORT);
+  //           navigation.navigate('ProductHome');
+  //         });
+  //     })
+  //     .catch(err => {});
+  // };
+
   const LogInUser = () => {
-    auth()
-      .signInWithEmailAndPassword(model.email, model.password)
-      .then(res => {
-        let id = res.user.uid;
-        database()
-          .ref(`users/${id}`)
-          .on('value', data => {
-            let user = data.val();
-            console.log(user);
-            ToastAndroid.show(`welcome ${model.email}`, ToastAndroid.SHORT);
-            navigation.navigate('ProductHome');
-          });
+    fbLogin(model)
+      .then((res: any) => {
+        console.log('Response data:', res);
+        dispatch(add({...res}));
+        ToastAndroid.show(`welcome ${res.fullName}`, ToastAndroid.SHORT);
+        navigation.navigate('ProductHome');
       })
-      .catch(err => {});
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
@@ -70,9 +86,7 @@ export default function Login({navigation}: any) {
 
             <View>
               <View style={rncStyles.pb1}>
-                <Text style={[rncStyles.textPrimary, rncStyles.p1]}>
-                  Email
-                </Text>
+                <Text style={[rncStyles.textPrimary, rncStyles.p1]}>Email</Text>
                 <TextInput
                   style={[
                     rncStyles.input,

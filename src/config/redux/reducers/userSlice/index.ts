@@ -3,24 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 type UserState = {
   isLogin: boolean;
   id: number;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   Image: string | null;
   email: string;
-  cnic: string;
-  bloodGroup: string;
   personalDetail: Record<string, any>;
 };
 
 let initialState: UserState = {
   isLogin: false,
   id: 1,
-  firstName: "abc",
-  lastName: "def",
+  fullName: "abc",
   Image: null,
   email: "abc",
-  cnic: "00000-000000-0",
-  bloodGroup: "abc",
   personalDetail: {},
 };
 
@@ -36,12 +30,9 @@ export const UserSlice = createSlice({
     add: (state, action) => {
       state.isLogin = true;
       state.id = action.payload.id;
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
+      state.fullName = action.payload.fullName;
       state.Image = action.payload.Image;
       state.email = action.payload.email;
-      state.cnic = action.payload.cnic;
-      state.bloodGroup = action.payload.bloodGroup;
       state.personalDetail = { ...action.payload };
       // localStorage.setItem("userState", JSON.stringify(state));
     },
@@ -57,7 +48,7 @@ export default UserSlice.reducer;
 // let initialState = {
 //   isLogin: false,
 //   id: 1,
-//   firstName: "abc",
+//   fullName: "abc",
 //   Image: null ,
 //   email: "abc",
 //   cnic: "00000-000000-0",
@@ -72,7 +63,7 @@ export default UserSlice.reducer;
 //     add: (state, action) => {
 //       state.isLogin = true;
 //       state.id = action.payload.id;
-//       state.firstName = action.payload.firstName;
+//       state.fullName = action.payload.fullName;
 //       state.Image = action.payload.Image;
 //       state.email = action.payload.email;
 //       state.cnic = action.payload.cnic;

@@ -5,26 +5,24 @@ import rncStyles from 'rncstyles';
 import BaseColor from '../../../constant';
 
 type CardProps = {
-    onPress?: (...args: any[]) => any;
-    title: string;
-    image: any;
-    price: string;
-    key:any
-  };
+  onPress?: (...args: any[]) => any;
+  title: string;
+  image: any;
+  price: string;
+};
 
 export default function ProductCard(props: CardProps) {
-    const { title, image, price, onPress,key} = props;
+  const {title, image, price, onPress} = props;
   return (
     <TouchableOpacity
-    key={key}
-    onPress={onPress}
+      onPress={onPress}
       style={[
         styles.productCarddiv,
         rncStyles.justifyContentCenter,
         rncStyles.alignItemsCenter,
-        rncStyles.shadow2
+        rncStyles.shadow2,
         // rncStyles
-      ]} >
+      ]}>
       <Image
         source={{
           uri: image,
@@ -39,13 +37,16 @@ export default function ProductCard(props: CardProps) {
             fontSize: 12,
           }}
           numberOfLines={1}>
-         {title}
+          {title}
         </Text>
-        <Text style={{
+        <Text
+          style={{
             color: BaseColor.black,
             fontSize: 16,
-            fontWeight:'400'
-          }} >{price}</Text>
+            fontWeight: '400',
+          }}>
+          {price}
+        </Text>
       </View>
     </TouchableOpacity>
   );

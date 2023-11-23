@@ -15,6 +15,7 @@ import ProductCard from '../../../components/card/product-card';
 import {useState, useEffect} from 'react';
 import {Get} from '../../../config/api-method';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useSelector } from "react-redux";
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const deviceHeight = Dimensions.get('window').height;
@@ -22,6 +23,7 @@ const deviceWidth = Dimensions.get('window').width;
 
 export default function Product({navigation}: any) {
   const [listData, setListData] = useState<any>([]);
+  const userData = useSelector((state: any) => state.user);
   // const [selectedCategory, setSelectedCategory] = useState('All');
 
   let getData = () => {
@@ -64,7 +66,10 @@ export default function Product({navigation}: any) {
             </Text>
             <Text
               style={[rncStyles.fs6, styles.backText, {fontWeight: 'bold'}]}>
-              User Name
+                {userData?.fullName &&
+                      userData.fullName.charAt(0).toUpperCase() +
+                        userData.fullName.slice(1)}
+              
             </Text>
           </View>
           <View style={[styles.profileHeaderdivImage]}></View>
@@ -179,11 +184,11 @@ export default function Product({navigation}: any) {
               width: deviceWidth / 1,
               paddingHorizontal: 5,
               justifyContent: 'center',
-              paddingTop:10
+              paddingTop: 10,
             }}>
-            {listData.map((x: any) => (
+            {listData.map((x: any, i: any) => (
               <ProductCard
-                key={x.id}
+                key={i}
                 title={x.title}
                 price={x.price}
                 image={x.image}

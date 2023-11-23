@@ -8,36 +8,50 @@ import {
   ToastAndroid,
 } from 'react-native';
 import rncStyles from 'rncstyles';
-import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
+import {fbSignUp} from '../../../config/firebase/firebase-methods';
+import { add } from '../../../config/redux/reducers/userSlice';
+import { useDispatch } from "react-redux";
 
 export default function SignUp({navigation}: any) {
+  const dispatch = useDispatch();
   const [model, setModel] = useState<any>({});
+  // sir way
+  // const SignUpUser = () => {
+  //   auth()
+  //     .createUserWithEmailAndPassword(model.email, model.password)
+  //     .then(res => {
+  //       console.log('User account created & signed in!');
+  //       model.id = res.user.uid;
+  //       database()
+  //         .ref(`users/${model.id}`)
+  //         .set(model)
+  //         .then(() => {
+  //           ToastAndroid.show(`welcome ${model.fullName}`, ToastAndroid.SHORT);
+  //           navigation.navigate('ProductHome');
+  //         })
+  //         .catch(err => {});
+  //     })
+  //     .catch(error => {
+  //       if (error.code === 'auth/email-already-in-use') {
+  //         console.log('That email address is already in use!');
+  //       }
+
+  //       if (error.code === 'auth/invalid-email') {
+  //         console.log('That email address is invalid!');
+  //       }
+
+  //       console.error(error);
+  //     });
+  // };
 
   const SignUpUser = () => {
-    auth()
-      .createUserWithEmailAndPassword(model.email, model.password)
-      .then(res => {
-        console.log('User account created & signed in!');
-        model.id = res.user.uid;
-        database()
-          .ref(`users/${model.id}`)
-          .set(model)
-          .then(() => {
-            ToastAndroid.show(`welcome ${model.fullName}`, ToastAndroid.SHORT);
-            navigation.navigate('ProductHome');
-          })
-          .catch(err => {});
+    dispatch(add({ ...model }))
+    fbSignUp(model)
+      .then((res: any) => {
+        ToastAndroid.show(`welcome ${model.fullName}`, ToastAndroid.SHORT);
+        navigation.navigate('ProductHome');
       })
       .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
         console.error(error);
       });
   };
