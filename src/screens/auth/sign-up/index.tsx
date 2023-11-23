@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
 import rncStyles from 'rncstyles';
 import auth from '@react-native-firebase/auth';
@@ -23,10 +24,10 @@ export default function SignUp({navigation}: any) {
           .ref(`users/${model.id}`)
           .set(model)
           .then(() => {
-            navigation.navigate('ProductHome')
-          }).catch( err => {
-
+            ToastAndroid.show(`welcome ${model.fullName}`, ToastAndroid.SHORT);
+            navigation.navigate('ProductHome');
           })
+          .catch(err => {});
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -44,12 +45,7 @@ export default function SignUp({navigation}: any) {
   return (
     <>
       <View style={[rncStyles.h100, rncStyles.bgWhite]}>
-        <View
-          style={[
-            
-            rncStyles.p2,
-            rncStyles.justifyContentCenter,
-          ]}>
+        <View style={[rncStyles.p2, rncStyles.justifyContentCenter]}>
           <View style={rncStyles.py3}>
             <Text
               style={[
@@ -57,7 +53,7 @@ export default function SignUp({navigation}: any) {
                 rncStyles.textPrimary,
                 rncStyles.textBold,
                 rncStyles.mb1,
-              ]} >
+              ]}>
               Sign Up
             </Text>
             <Text style={[rncStyles.fs5, rncStyles.textSecondary]}>
@@ -77,9 +73,10 @@ export default function SignUp({navigation}: any) {
                     rncStyles.rounded,
                     rncStyles.border1,
                     rncStyles.borderPrimary,
+                    rncStyles.textSecondary,
                   ]}
                   value={model.fullName}
-                  onChangeText={(e) => setModel({...model, fullName: e})}
+                  onChangeText={e => setModel({...model, fullName: e})}
                   placeholder="eg. Muhammad Zaid"
                 />
               </View>
@@ -88,6 +85,7 @@ export default function SignUp({navigation}: any) {
                 <TextInput
                   keyboardType="email-address"
                   style={[
+                    rncStyles.textSecondary,
                     rncStyles.input,
                     rncStyles.bgWhite,
                     rncStyles.rounded,
@@ -96,7 +94,7 @@ export default function SignUp({navigation}: any) {
                   ]}
                   placeholder="example@abc.com"
                   value={model.email}
-                  onChangeText={(e) => setModel({...model, email: e})}
+                  onChangeText={e => setModel({...model, email: e})}
                 />
               </View>
               <View style={rncStyles.pb1}>
@@ -106,6 +104,7 @@ export default function SignUp({navigation}: any) {
                 <TextInput
                   secureTextEntry={true}
                   style={[
+                    rncStyles.textSecondary,
                     rncStyles.input,
                     rncStyles.bgWhite,
                     rncStyles.rounded,
@@ -114,7 +113,7 @@ export default function SignUp({navigation}: any) {
                   ]}
                   placeholder="Enter Password atleast 6 characters"
                   value={model.password}
-                  onChangeText={(e) => setModel({...model, password: e})}
+                  onChangeText={e => setModel({...model, password: e})}
                 />
               </View>
               {/* <View style={rncStyles.pb1}>
@@ -124,6 +123,7 @@ export default function SignUp({navigation}: any) {
                 <TextInput
                   secureTextEntry={true}
                   style={[
+                     rncStyles.textSecondary,
                     rncStyles.input,
                     rncStyles.bgWhite,
                     rncStyles.rounded,
@@ -136,8 +136,7 @@ export default function SignUp({navigation}: any) {
               <View style={rncStyles.py2}>
                 <TouchableOpacity
                   style={[rncStyles.btnPrimary, rncStyles.rounded]}
-                  onPress={SignUpUser}
-                >
+                  onPress={SignUpUser}>
                   <Text
                     style={[
                       rncStyles.fs5,
@@ -171,8 +170,9 @@ export default function SignUp({navigation}: any) {
                   rncStyles.fs5,
                   rncStyles.ms1,
                   rncStyles.textPrimary,
-                ]} onPress={() => {
-                    navigation.navigate('Login')
+                ]}
+                onPress={() => {
+                  navigation.navigate('Login');
                 }}>
                 Login
               </Text>
