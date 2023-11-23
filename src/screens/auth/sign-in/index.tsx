@@ -2,7 +2,7 @@
 import { View, TextInput, TouchableOpacity, Text, ScrollView, Image } from 'react-native'
 import rncStyles from 'rncstyles'
 
-export default function Login() {
+export default function Login({navigation}: any) {
     return <>
         <View
             style={[
@@ -113,8 +113,36 @@ export default function Login() {
                         </View>
                     </View>
                 </ScrollView>
-
+                <View
+            style={[
+              rncStyles.py2,
+              rncStyles.flexRow,
+              rncStyles.justifyContentCenter,
+            ]}>
+            <Text
+              style={[
+                rncStyles.textBold,
+                rncStyles.textSecondary,
+                rncStyles.fs5,
+              ]}>
+              Don't Have an Account?
+            </Text>
+            <TouchableOpacity>
+              <Text
+                style={[
+                  rncStyles.textBold,
+                  rncStyles.fs5,
+                  rncStyles.ms1,
+                  rncStyles.textPrimary,
+                ]} onPress={() => {
+                    navigation.navigate('SignUp')
+                }}>
+                SignUp
+              </Text>
+            </TouchableOpacity>
+          </View>
             </View>
+            
         </View>
     </>
 }

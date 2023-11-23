@@ -45,8 +45,12 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   productCarddiv: {
-    width: deviceWidth / 2.1,
+    width: deviceWidth / 2.3,
     padding: 5,
+    backgroundColor:"white",
+    marginHorizontal:3,
+    marginVertical:3,
+    borderRadius: 5,
   },
   productCardImage: {
       width: deviceWidth / 2.4,

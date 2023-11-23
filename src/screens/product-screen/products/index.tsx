@@ -179,6 +179,7 @@ export default function Product({navigation}: any) {
               width: deviceWidth / 1,
               paddingHorizontal: 5,
               justifyContent: 'center',
+              paddingTop:10
             }}>
             {listData.map((x: any) => (
               <ProductCard
